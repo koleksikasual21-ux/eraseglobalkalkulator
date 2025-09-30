@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kalkulator Ongkir ke USA</title>
+  <title>ERASE GLOBAL - Kalkulator Ongkir USA</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -16,7 +16,12 @@
       background: #0066cc;
       color: white;
       text-align: center;
-      padding: 15px;
+      padding: 20px 15px;
+    }
+    header img {
+      max-width: 120px;
+      height: auto;
+      margin-bottom: 10px;
     }
     .container {
       max-width: 500px;
@@ -25,6 +30,10 @@
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      margin: 10px 0 5px;
+      font-size: 22px;
     }
     h2 {
       text-align: center;
@@ -68,10 +77,27 @@
       color: red;
       font-weight: bold;
     }
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      padding: 15px;
+      font-size: 14px;
+      color: #555;
+    }
+    footer a {
+      color: #0066cc;
+      text-decoration: none;
+    }
     @media (max-width: 600px) {
       .container {
         margin: 10px;
         padding: 15px;
+      }
+      header img {
+        max-width: 80px;
+      }
+      h1 {
+        font-size: 18px;
       }
       input, button {
         font-size: 14px;
@@ -81,7 +107,10 @@
 </head>
 <body>
   <header>
-    <h1>Kalkulator Ongkir USA</h1>
+    <!-- Ganti URL logo di bawah dengan logo ERASE GLOBAL Anda -->
+    <img src="https://imgur.com/a/erase-global-logo-panjang-e9ft1v8" alt="ERASE GLOBAL Logo">
+    <h1>ERASE GLOBAL</h1>
+    <p>Kalkulator Ongkir ke USA</p>
   </header>
 
   <div class="container">
@@ -99,12 +128,14 @@
     <input type="number" id="tinggi" placeholder="contoh: 20">
 
     <button onclick="hitung()">Hitung Ongkir</button>
-
     <div id="hasil" class="hasil"></div>
   </div>
 
+  <footer>
+    © 2025 ERASE GLOBAL | <a href="https://wa.me/6289513583699" target="_blank">Hubungi Kami</a>
+  </footer>
+
   <script>
-    // Tabel harga (gram : harga dalam Rupiah)
     const hargaTabel = {
       50: 148400, 100: 166600, 150: 184800, 200: 199100, 250: 224200,
       300: 249300, 350: 284900, 400: 299200, 450: 313500, 500: 373300,
@@ -122,13 +153,8 @@
       let lebar = parseFloat(document.getElementById("lebar").value) || 0;
       let tinggi = parseFloat(document.getElementById("tinggi").value) || 0;
 
-      // Hitung berat volume (cm³ / 5000 → kg → gram)
       let beratVolume = (panjang * lebar * tinggi) / 5000 * 1000;
-
-      // Ambil berat terbesar
       let finalBerat = Math.max(berat, beratVolume);
-
-      // Bulatkan ke atas per 50 gram
       let finalBeratBulat = Math.ceil(finalBerat / 50) * 50;
 
       let hasilDiv = document.getElementById("hasil");
