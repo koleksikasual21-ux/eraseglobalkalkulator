@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>ERASE GLOBAL USA RATE</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 400px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      margin-top: 15px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 16px;
+      line-height: 1.6;
+      text-align: center;
+    }
+    .express {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>ERASE GLOBAL USA RATE</h2>
+
+    <label>Berat Aktual (gram):</label>
+    <input type="number" id="berat" placeholder="contoh: 1200">
+
+    <label>Panjang (cm):</label>
+    <input type="number" id="panjang" placeholder="cm">
+
+    <label>Lebar (cm):</label>
+    <input type="number" id="lebar" placeholder="cm">
+
+    <label>Tinggi (cm):</label>
+    <input type="number" id="tinggi" placeholder="cm">
+
+    <button onclick="hitung()">Hitung Ongkir</button>
+    <div class="result" id="hasil"></div>
+  </div>
+
+  <script>
+    // Tabel harga (gram : harga dalam Rupiah)
+    const hargaTabel = {
+      50: 148400, 100: 166600, 150: 184800, 200: 199100, 250: 224200,
+      300: 249300, 350: 284900, 400: 299200, 450: 313500, 500: 373300,
+      550: 409700, 600: 424000, 650: 438300, 700: 452600, 750: 465600,
+      800: 479900, 850: 496800, 900: 511100, 950: 539700, 1000: 554000,
+      1050: 589100, 1100: 603400, 1150: 617700, 1200: 633300, 1250: 648900,
+      1300: 667700, 1350: 677500, 1400: 700900, 1450: 715200, 1500: 730800,
+      1550: 750300, 1600: 764600, 1650: 782000, 1700: 794500, 1750: 807500,
+      1800: 824400, 1850: 851700, 1900: 866000, 1950: 881600, 2000: 895900
+    };
+
+    function hitung() {
+      let berat = parseFloat(document.getElementById("berat").value) || 0;
+      let panjang = parseFloat(document.getElementById("panjang").value) || 0;
+      let lebar = parseFloat(document.getElementById("lebar").value) || 0;
+      let tinggi = parseFloat(document.getElementById("tinggi").value) || 0;
+
+      // Hitung berat volume (cm³ / 5000 → kg → gram)
+      let beratVolume = (panjang * lebar * tinggi) / 5000 * 1000;
+
+      // Ambil berat terbesar
+      let finalBerat = Math.max(berat, beratVolume);
+
+      let hasilDiv = document.getElementById("hasil");
+
+      if (finalBerat > 2000) {
+        hasilDiv.innerHTML = `
+          Berat chargeable: <b>${finalBerat.toFixed(0)} gr</b><br>
+          <span class="express">Layanan akan dipindahkan ke jasa Express.<br>
+          Hubungi +62 895-1358-3699 untuk mendapatkan harga terbaik.</span>
+        `;
+      } else {
+        // Cari harga di tabel
+        let nearest = Object.keys(hargaTabel).find(key => finalBerat <= key);
+        let harga = hargaTabel[nearest];
+        hasilDiv.innerHTML = `
+          Berat chargeable: <b>${finalBerat.toFixed(0)} gr</b><br>
+          Harga Ongkir: <b>Rp ${harga.toLocaleString("id-ID")}</b>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>
