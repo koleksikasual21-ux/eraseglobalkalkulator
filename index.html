@@ -3,100 +3,104 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ERASE GLOBAL USA RATE</title>
+  <title>Kalkulator Ongkir ke USA</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f5f7fa;
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+      background: #f4f6f8;
+      color: #333;
+    }
+    header {
+      background: #0066cc;
+      color: white;
+      text-align: center;
+      padding: 15px;
     }
     .container {
-      background: #fff;
-      padding: 25px 30px;
+      max-width: 500px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      width: 90%;
-      max-width: 420px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
     h2 {
       text-align: center;
       margin-bottom: 20px;
-      color: #333;
-      font-size: 22px;
     }
     label {
       display: block;
       margin-top: 10px;
       font-weight: bold;
-      font-size: 14px;
     }
     input {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
-      border-radius: 6px;
       border: 1px solid #ccc;
-      box-sizing: border-box;
-      font-size: 15px;
+      border-radius: 8px;
+      font-size: 16px;
     }
     button {
-      width: 100%;
-      background: #007bff;
-      color: #fff;
-      border: none;
-      padding: 12px;
       margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 8px;
       font-size: 16px;
-      border-radius: 6px;
       cursor: pointer;
-      transition: 0.3s;
     }
     button:hover {
-      background: #0056b3;
+      background: #004999;
     }
-    .result {
+    .hasil {
       margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      background: #f0f8ff;
       font-size: 16px;
-      line-height: 1.6;
-      text-align: center;
     }
     .express {
       color: red;
       font-weight: bold;
     }
-
-    /* Responsive untuk layar kecil */
     @media (max-width: 600px) {
-      .container { padding: 20px; }
-      h2 { font-size: 20px; }
-      button { font-size: 15px; padding: 10px; }
-      input { font-size: 14px; }
+      .container {
+        margin: 10px;
+        padding: 15px;
+      }
+      input, button {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Kalkulator Ongkir USA</h2>
+  <header>
+    <h1>Kalkulator Ongkir USA</h1>
+  </header>
 
-    <label>Berat Aktual (gram):</label>
+  <div class="container">
+    <h2>Hitung Ongkir</h2>
+    <label for="berat">Berat (gram):</label>
     <input type="number" id="berat" placeholder="contoh: 1200">
 
     <label>Panjang (cm):</label>
-    <input type="number" id="panjang" placeholder="cm">
+    <input type="number" id="panjang" placeholder="contoh: 40">
 
     <label>Lebar (cm):</label>
-    <input type="number" id="lebar" placeholder="cm">
+    <input type="number" id="lebar" placeholder="contoh: 30">
 
     <label>Tinggi (cm):</label>
-    <input type="number" id="tinggi" placeholder="cm">
+    <input type="number" id="tinggi" placeholder="contoh: 20">
 
     <button onclick="hitung()">Hitung Ongkir</button>
-    <div class="result" id="hasil"></div>
+
+    <div id="hasil" class="hasil"></div>
   </div>
 
   <script>
@@ -118,4 +122,33 @@
       let lebar = parseFloat(document.getElementById("lebar").value) || 0;
       let tinggi = parseFloat(document.getElementById("tinggi").value) || 0;
 
-      // Hitung ber
+      // Hitung berat volume (cm³ / 5000 → kg → gram)
+      let beratVolume = (panjang * lebar * tinggi) / 5000 * 1000;
+
+      // Ambil berat terbesar
+      let finalBerat = Math.max(berat, beratVolume);
+
+      // Bulatkan ke atas per 50 gram
+      let finalBeratBulat = Math.ceil(finalBerat / 50) * 50;
+
+      let hasilDiv = document.getElementById("hasil");
+
+      if (finalBeratBulat > 2000) {
+        hasilDiv.innerHTML = `
+          Berat chargeable: <b>${finalBeratBulat} gr</b><br>
+          <span class="express">Layanan akan dipindahkan ke jasa Express.<br>
+          Hubungi <a href="https://wa.me/6289513583699" target="_blank">+62 895-1358-3699</a> untuk mendapatkan harga terbaik.</span>
+        `;
+      } else {
+        let harga = hargaTabel[finalBeratBulat];
+        hasilDiv.innerHTML = `
+          Berat aktual: ${berat.toFixed(0)} gr <br>
+          Berat volume: ${beratVolume.toFixed(0)} gr <br>
+          Berat chargeable (dibulatkan): <b>${finalBeratBulat} gr</b><br>
+          Harga Ongkir: <b>Rp ${harga.toLocaleString("id-ID")}</b>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>
