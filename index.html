@@ -2,6 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ERASE GLOBAL USA RATE</title>
   <style>
     body {
@@ -19,33 +20,37 @@
       padding: 25px 30px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      width: 400px;
+      width: 90%;
+      max-width: 420px;
     }
     h2 {
       text-align: center;
       margin-bottom: 20px;
       color: #333;
+      font-size: 22px;
     }
     label {
       display: block;
       margin-top: 10px;
       font-weight: bold;
+      font-size: 14px;
     }
     input {
       width: 100%;
-      padding: 8px;
+      padding: 10px;
       margin-top: 5px;
       border-radius: 6px;
       border: 1px solid #ccc;
       box-sizing: border-box;
+      font-size: 15px;
     }
     button {
       width: 100%;
       background: #007bff;
       color: #fff;
       border: none;
-      padding: 10px;
-      margin-top: 15px;
+      padding: 12px;
+      margin-top: 20px;
       font-size: 16px;
       border-radius: 6px;
       cursor: pointer;
@@ -64,11 +69,19 @@
       color: red;
       font-weight: bold;
     }
+
+    /* Responsive untuk layar kecil */
+    @media (max-width: 600px) {
+      .container { padding: 20px; }
+      h2 { font-size: 20px; }
+      button { font-size: 15px; padding: 10px; }
+      input { font-size: 14px; }
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>ERASE GLOBAL USA RATE</h2>
+    <h2>Kalkulator Ongkir USA</h2>
 
     <label>Berat Aktual (gram):</label>
     <input type="number" id="berat" placeholder="contoh: 1200">
@@ -105,30 +118,4 @@
       let lebar = parseFloat(document.getElementById("lebar").value) || 0;
       let tinggi = parseFloat(document.getElementById("tinggi").value) || 0;
 
-      // Hitung berat volume (cm³ / 5000 → kg → gram)
-      let beratVolume = (panjang * lebar * tinggi) / 5000 * 1000;
-
-      // Ambil berat terbesar
-      let finalBerat = Math.max(berat, beratVolume);
-
-      let hasilDiv = document.getElementById("hasil");
-
-      if (finalBerat > 2000) {
-        hasilDiv.innerHTML = `
-          Berat chargeable: <b>${finalBerat.toFixed(0)} gr</b><br>
-          <span class="express">Layanan akan dipindahkan ke jasa Express.<br>
-          Hubungi +62 895-1358-3699 untuk mendapatkan harga terbaik.</span>
-        `;
-      } else {
-        // Cari harga di tabel
-        let nearest = Object.keys(hargaTabel).find(key => finalBerat <= key);
-        let harga = hargaTabel[nearest];
-        hasilDiv.innerHTML = `
-          Berat chargeable: <b>${finalBerat.toFixed(0)} gr</b><br>
-          Harga Ongkir: <b>Rp ${harga.toLocaleString("id-ID")}</b>
-        `;
-      }
-    }
-  </script>
-</body>
-</html>
+      // Hitung ber
